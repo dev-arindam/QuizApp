@@ -3,6 +3,7 @@ import HomeScreen from "./screens/HomeScreen";
 import QuizScreen from "./screens/QuizScreen";
 import ResultScreen from "./screens/ResultScreen";
 import LoginScreen from "./screens/LoginScreen";
+import AdminScreen from "./screens/AdminScreen";
 
 export default function App() {
 const [user, setUser] = useState(null);
@@ -20,7 +21,9 @@ const [user, setUser] = useState(null);
   if (!user) {
     return <LoginScreen onLoginSuccess={setUser} />;
   }
-
+  if (user.role_id === 2) {
+    return <AdminScreen user={user} />;
+  }
   return (
 
     <>
@@ -38,7 +41,7 @@ const [user, setUser] = useState(null);
           }}
         />
       )}
-
+      
       {screen === "quiz" && (
         <QuizScreen
         key={category}
