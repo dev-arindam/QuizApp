@@ -18,14 +18,14 @@ export default function HomeScreen({ user, scores, onStartQuiz, onSelectCategory
         <View style={styles.profile}>
           <View style={styles.avatar} />
           <View>
-            <Text style={styles.name}>{user.name}</Text>
+            <Text style={styles.name}>{user.fname} {user.lname}</Text>
             <Text style={styles.id}>ID-{user.id}</Text>
           </View>
         </View>
 
         <View style={styles.coinBox}>
-          <Ionicons name="diamond" size={16} color="#00c2ff" />
-          <Text style={styles.coinText}>160</Text>
+          <Ionicons name="bar" size={16} color="#00c2ff" />
+          
         </View>
       </View>
 
