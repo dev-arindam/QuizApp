@@ -21,7 +21,9 @@ const [user, setUser] = useState(null);
   if (!user) {
     return <LoginScreen onLoginSuccess={setUser} />;
   }
-
+  if (user.role_id===2) {
+    return <AdminScreen user={user} scores={scores} />;
+  }
   return (
 
     <>
@@ -37,11 +39,11 @@ const [user, setUser] = useState(null);
             setCategory(cat);
             setScreen("quiz");
           }}
-           onOpenAdmin={() => setScreen("admin")}
+          //  onOpenAdmin={() => setScreen("admin")}
         />
       )}
 
-      {screen === "admin" && (
+      {/* {screen === "admin" && (
   <AdminScreen
     user={user}                // ✅ pass user
     scores={scores}            // ✅ pass scores
@@ -55,7 +57,7 @@ const [user, setUser] = useState(null);
     }}
     onBack={() => setScreen("home")} // back function
   />
-)}
+)} */}
 
       {screen === "quiz" && (
         <QuizScreen
