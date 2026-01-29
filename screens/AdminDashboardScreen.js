@@ -10,7 +10,12 @@ import {
 } from "react-native";
 import { Ionicons, FontAwesome5 } from "@expo/vector-icons";
 import UsersContentScreen from "./UsersContentScreen";
-import Teacheasignsubject from "./Teacheasignsubject";
+import AdminUsersScreen from "./AdminUsersScreen";
+import AdminStudentScreen from "./AdminStudentScreen";
+import AdminDepartmentScreen from "./AdminDepartmentScreen";
+import AdminSubjectScreen from "./AdminSubjectScreen";
+import AdminQuizCreationScreen from "./AdminQuizCreationScreen";
+import TeacherAssignedSubject from "./TeacherAssignedSubject";
 
 
 
@@ -45,9 +50,10 @@ export default function AdminDashboardScreen({ user, scores }) {
     { label: "Dashboard", icon: "home-outline" },
     { label: "Users", icon: "people-outline" },
     { label: "Department", icon: "business-outline" },
+    { label: "Subject", icon: "book-outline" },
     { label: "Quiz Creation", icon: "create-outline" },
     { label: "Student", icon: "school-outline" },
-    { label: "Teacher Assign Subject", icon: "school-outline" },
+    { label: "Teacher Assign Subject", icon: "people-outline" },
     { label: "Logout", icon: "log-out-outline" },
   ];
 
@@ -89,28 +95,31 @@ export default function AdminDashboardScreen({ user, scores }) {
   /* ---------------- STUDENT SECTION ---------------- */
   const StudentSection = () => (
     <>
-    <UsersContentScreen
-             rank={user} name={user} score={user} points={user} 
+    <AdminStudentScreen
+             user={user} scores={scores} 
             />
       
     </>
   );
-
+ /* ---------------- SUBJECT SECTION ---------------- */
+  const SubjectSection = () => (
+    <>
+    <AdminSubjectScreen />
+      
+    </>
+  );
   /* ---------------- DEPARTMENT SECTION ---------------- */
   const DepartmentSection = () => (
     <>
-      <Text style={styles.sectionTitle}>Departments</Text>
-      <View style={styles.box}>
-        <Text>Department management here</Text>
-      </View>
+      <AdminDepartmentScreen/>
     </>
   );
 
   /* ---------------- USERS SECTION ---------------- */
   const UsersSection = () => (
     <>
-      <UsersContentScreen
-             rank={user} name={user} score={user} points={user} 
+      <AdminUsersScreen
+              
             />
     </>
   );
@@ -118,17 +127,16 @@ export default function AdminDashboardScreen({ user, scores }) {
   /* ---------------- QUIZ SECTION ---------------- */
   const QuizSection = () => (
     <>
-      <Text style={styles.sectionTitle}>Quiz Creation</Text>
-      <View style={styles.box}>
-        <Text>Create & manage quizzes here</Text>
-      </View>
+      <AdminQuizCreationScreen/>
+      
     </>
   );
 
   /* ---------------- Asiign teacher SECTION ---------------- */
   const TeacherAssignSection = () => (
     <>
-      <Teacheasignsubject />
+      <TeacherAssignedSubject />
+       
     </>
   );
 
@@ -147,6 +155,8 @@ export default function AdminDashboardScreen({ user, scores }) {
         return <TeacherAssignSection />;
       case "Quiz Creation":
         return <QuizSection />;
+        case "Subject":
+        return <SubjectSection />;
       default:
         return null;
     }
