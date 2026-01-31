@@ -9,7 +9,10 @@ export default function LoginScreen({ onLoginSuccess }) {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleLogin = async () => {
+  const handleLogin = async (
+  email = email,
+  password = password
+) => {
   if (!email || !password) {
     Alert.alert("Error", "All fields are required");
     return;
@@ -51,11 +54,12 @@ export default function LoginScreen({ onLoginSuccess }) {
 
 
   return (
+<>
     <KeyboardAvoidingView
       style={styles.container}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
-      <View style={styles.login_container}>
+      {/* <View style={styles.login_container}>
         <Text style={styles.title}>Login</Text>
 
         <TextInput
@@ -84,8 +88,44 @@ export default function LoginScreen({ onLoginSuccess }) {
             <Text style={styles.btnText}>Login</Text>
           )}
         </TouchableOpacity>
-      </View>
+      </View> */}
+      <TouchableOpacity 
+  style={[styles.btn, { marginTop: 10, backgroundColor: "#28a745" }]}
+  onPress={() => handleLogin("admin@gmail.com", "1234")}
+  disabled={loading}
+>
+{loading ? (
+            <ActivityIndicator color="#fff" />
+          ) : (
+  <Text style={styles.btnText}>Login as Admin</Text>
+          )}
+</TouchableOpacity>
+<TouchableOpacity 
+  style={[styles.btn, { marginTop: 10, backgroundColor: "#4e1a47" }]}
+  onPress={() => handleLogin("pratik@gmail.com", "2222")}
+  disabled={loading}
+>
+  {loading ? (
+            <ActivityIndicator color="#fff" />
+          ) : (
+  <Text style={styles.btnText}>Login as Teacher</Text>
+          )}
+</TouchableOpacity>
+<TouchableOpacity 
+  style={[styles.btn, { marginTop: 10, backgroundColor: "#0b3d91" }]}
+  onPress={() => handleLogin("puja@gmail.com", "9999")}
+  disabled={loading}
+>
+  {loading ? (
+            <ActivityIndicator color="#fff" />
+          ) : (
+  <Text style={styles.btnText}>Login as Student</Text>
+          )}
+</TouchableOpacity>
     </KeyboardAvoidingView>
+    
+
+    </>
   );
 }
 

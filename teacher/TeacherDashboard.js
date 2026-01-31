@@ -1,5 +1,5 @@
-import React from "react";
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions,Image } from "react-native";
+import React, { useState } from "react";
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions } from "react-native";
 import { SafeAreaView } from "react-native";
 import { Ionicons, FontAwesome5 } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
@@ -7,6 +7,9 @@ import { LinearGradient } from "expo-linear-gradient";
 const { width } = Dimensions.get("window");
 
 export default function ModernTeacherDashboard({user}) {
+   const [questionMenu, setQuestionMenu] = useState(false);
+   const [studyMenu, setStudyMenu] = useState(false);
+
     // Function to get dynamic greeting
 const getGreeting = () => {
   const hour = new Date().getHours(); // gets 0 - 23
@@ -23,8 +26,7 @@ const getGreeting = () => {
         <LinearGradient colors={['#6366f1', '#4f46e5']} style={styles.header}>
           <View style={styles.headerTop}>
             <View style={styles.avatar}>
-              {/* <Ionicons name="person" size={28} color="#fff" /> */}
-              <Image source={{ uri: "https://yt3.googleusercontent.com/ytc/AIdro_m-cnBEfegF7w5aXISw453szyUUC0m6IvO3mbOYzd8Dq5E=s900-c-k-c0x00ffffff-no-rj" }} style={styles.avatar} />
+              <Ionicons name="person" size={28} color="#fff" />
             </View>
             <View style={{ flex: 1, marginLeft: 12 }}>
               <Text style={styles.name}>{user?.fname || "Professor Name"} {user?.lname || "Professor Name"}</Text>
@@ -37,10 +39,10 @@ const getGreeting = () => {
 
         {/* ===== Floating Stats Cards ===== */}
         <View style={styles.statsRow}>
-          <FloatingCard title="Students" value="1,250" icon="users" colors={['#6366f1', '#818cf8']} />
-          <FloatingCard title="Courses" value="24" icon="book" colors={['#22c55e', '#4ade80']} />
+          <FloatingCard title="Exam & Marks" value="1,250" icon="clipboard-check" colors={['#6366f1', '#818cf8']} />
+          <FloatingCard title="My Subject" value="24" icon="book" colors={['#22c55e', '#4ade80']} />
           <FloatingCard title="Assignments" value="32" icon="file-alt" colors={['#f59e0b', '#fcd34d']} />
-          <FloatingCard title="Classes" value="18" icon="chalkboard-teacher" colors={['#ef4444', '#f87171']} />
+          <FloatingCard title="Attendence" value="18" icon="calendar-check" colors={['#ef4444', '#f87171']} />
         </View>
 
         {/* ===== Quick Access Grid ===== */}
@@ -48,8 +50,8 @@ const getGreeting = () => {
         <View style={styles.quickRow}>
           <QuickCard icon="chalkboard" label="Classes" colors={['#6366f1', '#818cf8']} />
           <QuickCard icon="tasks" label="Assignments" colors={['#22c55e', '#4ade80']} />
-          <QuickCard icon="question-circle" label="Questions" colors={['#f59e0b', '#fcd34d']} />
-          <QuickCard icon="user-graduate" label="Students" colors={['#ef4444', '#f87171']} />
+          <QuickCard icon="question-circle" label="Questions" colors={['#f59e0b', '#fcd34d']} onPress={() => setQuestionMenu(true)} />
+          <QuickCard icon="user-graduate" label="Study" colors={['#ef4444', '#f87171']} onPress={() => setStudyMenu(true)} />
         </View>
 
         {/* ===== Performance Circular Chart ===== */}
@@ -108,6 +110,88 @@ const getGreeting = () => {
 
         <View style={{ height: 40 }} />
       </ScrollView>
+
+      {questionMenu && (
+  <View style={styles.overlay}>
+    <View style={styles.bottomSheet}>
+
+      <View style={styles.sheetHeader}>
+        <Text style={styles.sheetTitle}>Questions</Text>
+        <TouchableOpacity onPress={() => setQuestionMenu(false)}>
+          <Ionicons name="close" size={24} color="#6b7280" />
+        </TouchableOpacity>
+      </View>
+
+      <ScrollView
+        style={{ flex: 1 }}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingBottom: 20 }}
+      >
+        <TouchableOpacity style={styles.menuItem}>
+          <Text style={styles.menuText}>Create Quiz</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.menuItem}>
+          <Text style={styles.menuText}>Question Bank</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.menuItem}>
+          <Text style={styles.menuText}>Bulk Upload</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.menuItem}>
+          <Text style={styles.menuText}>Results</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.menuItem}>
+          <Text style={styles.menuText}>Analytics</Text>
+        </TouchableOpacity>
+      </ScrollView>
+
+    </View>
+  </View>
+)}
+
+{studyMenu && (
+  <View style={styles.overlay}>
+    <View style={styles.bottomSheet}>
+
+      <View style={styles.sheetHeader}>
+        <Text style={styles.sheetTitle}>Study</Text>
+        <TouchableOpacity onPress={() => setStudyMenu(false)}>
+          <Ionicons name="close" size={24} color="#6b7280" />
+        </TouchableOpacity>
+      </View>
+
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingBottom: 20 }}
+      >
+        <TouchableOpacity style={styles.menuItem}>
+          <Text style={styles.menuText}>Study Materials</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.menuItem}>
+          <Text style={styles.menuText}>Notes</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.menuItem}>
+          <Text style={styles.menuText}>Video Lectures</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.menuItem}>
+          <Text style={styles.menuText}>Reference Books</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.menuItem}>
+          <Text style={styles.menuText}>Syllabus</Text>
+        </TouchableOpacity>
+      </ScrollView>
+
+    </View>
+  </View>
+)}
+
    
 {/* ===== FIXED BOTTOM BAR ===== */}
       <View style={styles.bottomBar}>
@@ -151,14 +235,15 @@ const FloatingCard = ({ title, value, icon, colors }) => (
   </LinearGradient>
 );
 
-const QuickCard = ({ icon, label, colors }) => (
-  <TouchableOpacity style={styles.quickCard}>
+const QuickCard = ({ icon, label, colors, onPress }) => (
+  <TouchableOpacity style={styles.quickCard} onPress={onPress}>
     <LinearGradient colors={colors} style={styles.quickIconCircle}>
       <FontAwesome5 name={icon} size={20} color="#fff" />
     </LinearGradient>
     <Text style={styles.quickLabel}>{label}</Text>
   </TouchableOpacity>
 );
+
 
 const EventCard = ({ icon, title, date, time, location, status, colors }) => (
   <LinearGradient colors={colors} style={styles.eventCard}>
@@ -271,5 +356,52 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 28,
     elevation: 10,
-  }
+  },
+  overlay: {
+  position: "absolute",
+  top: 0,
+  left: 0,
+  right: 0,
+  bottom: 0,
+  backgroundColor: "rgba(0,0,0,0.4)",
+  justifyContent: "flex-end",
+},
+
+bottomSheet: {
+  backgroundColor: "#fff",
+  borderTopLeftRadius: 24,
+  borderTopRightRadius: 24,
+  padding: 20,
+  paddingBottom: 40,
+  maxHeight: "50%",
+  flex: 1,       
+},
+
+
+
+sheetHeader: {
+  flexDirection: "row",
+  justifyContent: "space-between",
+  alignItems: "center",
+  marginBottom: 12,
+},
+
+sheetTitle: {
+  fontSize: 18,
+  fontWeight: "700",
+  color: "#0f172a",
+},
+
+menuItem: {
+  paddingVertical: 14,
+  borderBottomWidth: 1,
+  borderBottomColor: "#e5e7eb",
+},
+
+menuText: {
+  fontSize: 16,
+  fontWeight: "600",
+  color: "#1e293b",
+}
+
 });

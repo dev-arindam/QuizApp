@@ -9,14 +9,16 @@ import {
   Animated,
   Dimensions,
 } from "react-native";
+import { LineChart, BarChart } from "react-native-chart-kit";
 import { Ionicons, FontAwesome5 } from "@expo/vector-icons";
 import AdminUsersScreen from "./AdminUsersScreen";
 import AdminStudentScreen from "./AdminStudentScreen";
 import AdminDepartmentScreen from "./AdminDepartmentScreen";
 import AdminSubjectScreen from "./AdminSubjectScreen";
 import AdminQuizCreationScreen from "./AdminQuizCreationScreen";
+import AdminExpenseScreen from "./AdminExpenseScreen";
 import TeacherAssignedSubject from "./TeacherAssignedSubject";
-import Nodatafound from "./nodatafound";
+import LoginScreen from "../login/LoginScreen";
 
 
 
@@ -57,7 +59,6 @@ export default function AdminDashboardScreen({ user, scores }) {
     { label: "Quiz Creation", icon: "create-outline" },
     { label: "Student", icon: "school-outline" },
     { label: "Teacher Assign Subject", icon: "people-outline" },
-    { label: "Logout", icon: "log-out-outline" },
   ];
 
   /* ---------------- DASHBOARD SECTION ---------------- */
@@ -100,6 +101,14 @@ export default function AdminDashboardScreen({ user, scores }) {
     <>
       <AdminStudentScreen
         user={user} scores={scores}
+      />
+
+    </>
+  );
+  /* ---------------- EXPENSE SECTION ---------------- */
+  const ExpenseSection = () => (
+    <>
+      <AdminExpenseScreen
       />
 
     </>
@@ -160,9 +169,7 @@ export default function AdminDashboardScreen({ user, scores }) {
       case "Quiz Creation":
         return <QuizSection />;
       case "Subject":
-        return <SubjectSection />;
-      case "Logout":
-        return <Nodatafound />;
+        return <AdminExpenseScreen />;
       default:
         return null;
     }
@@ -226,6 +233,19 @@ export default function AdminDashboardScreen({ user, scores }) {
                 <Text style={styles.sidebarText}>{item.label}</Text>
               </TouchableOpacity>
             ))}
+            <TouchableOpacity
+                
+                style={[
+                  styles.sidebarItemBox,
+                  activeMenu === "Logout" && styles.activeItem,
+                ]}
+                onPress={() => {
+                  
+                }}
+              >
+                <Ionicons name="log-out-outline" size={20} />
+                <Text style={styles.sidebarText}>Logout</Text>
+              </TouchableOpacity>
           </Animated.View>
         </>
       )}

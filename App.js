@@ -1,12 +1,12 @@
 import { useState } from "react";
-import HomeScreen from "./screens/HomeScreen";
-import QuizScreen from "./screens/QuizScreen";
-import ResultScreen from "./screens/ResultScreen";
-import LoginScreen from "./screens/LoginScreen";
-import AdminDashboardScreen from "./screens/AdminDashboardScreen";
-import TeacherDashboard from "./screens/TeacherDashboard";
-import StudentProfile from "./screens/StudentProfile";
-import StudentAttendance from "./screens/StudentAttendance";
+import HomeScreen from "./student/HomeScreen";
+import QuizScreen from "./student/QuizScreen";
+import ResultScreen from "./student/ResultScreen";
+import LoginScreen from "./login/LoginScreen";
+import AdminDashboardScreen from "./admin/AdminDashboardScreen";
+import TeacherDashboard from "./teacher/TeacherDashboard";
+import StudentProfile from "./student/StudentProfile";
+import StudentAttendance from "./student/StudentAttendance";
 
 
 
