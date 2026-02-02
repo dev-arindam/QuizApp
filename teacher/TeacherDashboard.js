@@ -6,7 +6,7 @@ import { LinearGradient } from "expo-linear-gradient";
 
 const { width } = Dimensions.get("window");
 
-export default function ModernTeacherDashboard({user}) {
+export default function ModernTeacherDashboard({user ,onLogout}) {
    const [questionMenu, setQuestionMenu] = useState(false);
    const [studyMenu, setStudyMenu] = useState(false);
 
@@ -24,18 +24,30 @@ const getGreeting = () => {
 
         {/* ===== Gradient Header ===== */}
         <LinearGradient colors={['#6366f1', '#4f46e5']} style={styles.header}>
-          <View style={styles.headerTop}>
-            <View style={styles.avatar}>
-              <Ionicons name="person" size={28} color="#fff" />
-            </View>
-            <View style={{ flex: 1, marginLeft: 12 }}>
-              <Text style={styles.name}>{user?.fname || "Professor Name"} {user?.lname || "Professor Name"}</Text>
-              <Text style={styles.role}>Assistant Professor</Text>
-            </View>
-            <Ionicons name="notifications-outline" size={26} color="#fff" />
-          </View>
-          <Text style={styles.welcome}>{getGreeting()}, {user.fname} {user.lname} !</Text>
-        </LinearGradient>
+  <View style={styles.headerTop}>
+    <View style={styles.avatar}>
+      <Ionicons name="person" size={28} color="#fff" />
+    </View>
+
+    <View style={{ flex: 1, marginLeft: 12 }}>
+      <Text style={styles.name}>
+        {user?.fname || "Professor Name"} {user?.lname || "Professor Name"}
+      </Text>
+      <Text style={styles.role}>Assistant Professor</Text>
+    </View>
+
+    {/* 🔴 LOGOUT */}
+    <TouchableOpacity onPress={onLogout}>
+      <Ionicons name="log-out-outline" size={26} color="#fff" />
+    </TouchableOpacity>
+
+  </View>
+
+  <Text style={styles.welcome}>
+    {getGreeting()}, {user.fname} {user.lname} !
+  </Text>
+</LinearGradient>
+
 
         {/* ===== Floating Stats Cards ===== */}
         <View style={styles.statsRow}>

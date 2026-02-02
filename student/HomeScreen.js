@@ -11,7 +11,8 @@ import {
 } from "react-native";
 import { Ionicons, FontAwesome5 } from "@expo/vector-icons";
 
-export default function HomeScreen({ user, scores, onStartQuiz, onSelectCategory, onOpenAttendance,onOpenProfile}) {
+
+export default function HomeScreen({ user, scores, onStartQuiz, onSelectCategory, onOpenAttendance,onOpenProfile,onOpenScore, onLogout}) {
 
   // ===== SIDEBAR STATE & ANIMATION =====
   const screenWidth = Dimensions.get("window").width;
@@ -155,15 +156,25 @@ export default function HomeScreen({ user, scores, onStartQuiz, onSelectCategory
           <TouchableOpacity
             key={index}
             style={styles.sidebarItem}
-            onPress={() => {
-              if (item.label === "Profile") {
-                onOpenProfile(); 
-              }
-              if (item.label === "Attendance") { 
-                onOpenAttendance();
-              }
-              closeSidebar(); 
-            }}
+           onPress={() => {
+  if (item.label === "Profile") {
+    onOpenProfile();
+  } 
+  else if (item.label === "Attendance") {
+    onOpenAttendance();
+  } 
+  else if (item.label === "Scores") {
+    onOpenScore();
+  } 
+  else if (item.label === "Logout") {
+    closeSidebar();
+    onLogout();
+    return;
+  }
+
+  closeSidebar();
+}}
+
           >
             <View style={{ flexDirection: "row", alignItems: "center", gap: 12 }}>
               <Ionicons name={item.icon} size={20} color="#0b3d91" />

@@ -7,7 +7,7 @@ import AdminDashboardScreen from "./admin/AdminDashboardScreen";
 import TeacherDashboard from "./teacher/TeacherDashboard";
 import StudentProfile from "./student/StudentProfile";
 import StudentAttendance from "./student/StudentAttendance";
-
+import StudentDashboard from "./student/StudentDashboard";
 
 
 
@@ -28,10 +28,10 @@ const [user, setUser] = useState(null);
     return <LoginScreen onLoginSuccess={setUser} />;
   }
   if (user.role_id === 2) {
-    return <AdminDashboardScreen user={user} scores={scores} />;
+    return <AdminDashboardScreen user={user} scores={scores}  onLogout={() => setUser(null)} />;
   }
   if (user.role_id === 1) {
-    return <TeacherDashboard user={user}/>;
+    return <TeacherDashboard user={user} onLogout={() => setUser(null)} />;
   }
   return (
 
@@ -50,8 +50,14 @@ const [user, setUser] = useState(null);
           }}
           onOpenProfile={() => setScreen("profile")}
           onOpenAttendance={() => setScreen("attendance")}
+          onOpenScore={() => setScreen("score")}
+
+          onLogout={() => setUser(null)}
         />
       )}
+      {screen === "score" && (
+  <StudentDashboard/>
+)}
 
       {screen === "attendance" && (
   <StudentAttendance onBack={() => setScreen("home")}/>

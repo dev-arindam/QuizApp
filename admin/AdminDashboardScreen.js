@@ -126,7 +126,7 @@ const TaskReports = () => (
 );
 
 
-export default function AdminScreen({ user, scores }) {
+export default function AdminScreen({ user, scores, onLogout }) {
   const screenWidth = Dimensions.get("window").width - 40;
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -660,13 +660,20 @@ export default function AdminScreen({ user, scores }) {
                       activeMenu === item.label && styles.activeItem,
                     ]}
                     onPress={() => {
-                      if (item.submenu) {
-                        setOpenSubmenu(openSubmenu === item.label ? null : item.label);
-                      } else {
-                        setActiveMenu(item.label);
-                        closeSidebar();
-                      }
-                    }}
+  if (item.label === "Logout") {
+    closeSidebar();
+    onLogout();          // 🔥 THIS LINE LOGS OUT
+    return;
+  }
+
+  if (item.submenu) {
+    setOpenSubmenu(openSubmenu === item.label ? null : item.label);
+  } else {
+    setActiveMenu(item.label);
+    closeSidebar();
+  }
+}}
+
                   >
                     <Ionicons
                       name={item.icon}
