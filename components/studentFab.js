@@ -13,10 +13,13 @@ export default function MainFab({ setScreen }) {
     useRef(new Animated.Value(0)).current,
     useRef(new Animated.Value(0)).current,
     useRef(new Animated.Value(0)).current,
+    useRef(new Animated.Value(0)).current,
+
   ];
 
   const items = [
     { icon: "person-outline", screen: "profile" },
+   { icon: "star-outline", screen: "review" },
     { icon: "book-outline", screen: "home" },
     { icon: "calendar-outline", screen: "attendance" },
     { icon: "create-outline", screen: "quizDashboard" },
