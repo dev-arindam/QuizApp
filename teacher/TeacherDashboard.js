@@ -10,6 +10,9 @@ const { width } = Dimensions.get("window");
 export default function ModernTeacherDashboard({user ,onLogout,setScreen}) {
    const [questionMenu, setQuestionMenu] = useState(false);
    const [studyMenu, setStudyMenu] = useState(false);
+   const [sidebarOpen, setSidebarOpen] = useState(false);
+   const [quizOpen, setQuizOpen] = useState(false);
+
 
     // Function to get dynamic greeting
 const getGreeting = () => {
@@ -41,9 +44,13 @@ const getGreeting = () => {
     </View>
 
     {/*  LOGOUT */}
-    <TouchableOpacity onPress={onLogout}>
+    {/* <TouchableOpacity onPress={onLogout}>
       <Ionicons name="log-out-outline" size={26} color="#fff" />
-    </TouchableOpacity>
+    </TouchableOpacity> */}
+
+    <TouchableOpacity onPress={() => setSidebarOpen(true)}>
+  <Ionicons name="menu" size={28} color="#fff" />
+</TouchableOpacity>
 
   </View>
 
@@ -126,6 +133,161 @@ const getGreeting = () => {
 
         <View style={{ height: 40 }} />
       </ScrollView>
+
+
+{sidebarOpen && (
+  <View style={styles.sidebarOverlay}>
+    <View style={styles.sidebar}>
+
+      {/* Sidebar Header */}
+      <View style={styles.sidebarHeader}>
+    <TouchableOpacity
+      style={styles.sidebarClose}
+      onPress={() => setSidebarOpen(false)}
+    >
+      <Ionicons name="close" size={22} color="#6b7280" />
+    </TouchableOpacity>
+
+    <View style={styles.sidebarAvatar}>
+      <Ionicons name="person" size={28} color="#fff" />
+    </View>
+
+    <Text style={styles.sidebarName}>
+      {user?.fname || "Professor"} {user?.lname || ""}
+    </Text>
+    <Text style={styles.sidebarRole}>Assistant Professor</Text>
+  </View>
+
+
+      {/* Menu Items */}
+     <ScrollView
+  showsVerticalScrollIndicator={false}
+  contentContainerStyle={{
+    paddingBottom: 80,
+  }}
+>
+
+
+
+  {/* Profile */}
+  <TouchableOpacity style={styles.sidebarItem}>
+    <Ionicons name="person-outline" size={22} color="#6366f1" />
+    <Text style={styles.sidebarText}>Profile</Text>
+  </TouchableOpacity>
+
+  {/* Attendance */}
+  <TouchableOpacity style={styles.sidebarItem}>
+    <Ionicons name="calendar-outline" size={22} color="#6366f1" />
+    <Text style={styles.sidebarText}>Attendance</Text>
+  </TouchableOpacity>
+
+  {/* Exam & Marks */}
+  <TouchableOpacity style={styles.sidebarItem}>
+    <Ionicons name="clipboard-outline" size={22} color="#6366f1" />
+    <Text style={styles.sidebarText}>Exam & Marks</Text>
+  </TouchableOpacity>
+
+  {/* Assignment */}
+  <TouchableOpacity style={styles.sidebarItem}>
+    <Ionicons name="document-text-outline" size={22} color="#6366f1" />
+    <Text style={styles.sidebarText}>Assignment</Text>
+  </TouchableOpacity>
+
+  {/* ===== ONLINE QUIZ (WITH SUB MENU) ===== */}
+  <TouchableOpacity
+    style={styles.sidebarItem}
+    onPress={() => setQuizOpen(!quizOpen)}
+  >
+    <Ionicons name="help-circle-outline" size={22} color="#6366f1" />
+    <Text style={styles.sidebarText}>Online Quiz</Text>
+    <Ionicons
+      name={quizOpen ? "chevron-up-outline" : "chevron-down-outline"}
+      size={18}
+      color="#64748b"
+      style={{ marginLeft: "auto" }}
+    />
+  </TouchableOpacity>
+
+  {quizOpen && (
+    <View style={styles.subMenu}>
+      <TouchableOpacity style={styles.subMenuItem}>
+        <Ionicons name="add-circle-outline" size={18} color="#4f46e5" />
+        <Text style={styles.subMenuText}>Create Quiz</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.subMenuItem}>
+        <Ionicons name="albums-outline" size={18} color="#4f46e5" />
+        <Text style={styles.subMenuText}>Question Bank</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.subMenuItem}>
+        <Ionicons name="cloud-upload-outline" size={18} color="#4f46e5" />
+        <Text style={styles.subMenuText}>Bulk Upload</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.subMenuItem}>
+        <Ionicons name="trophy-outline" size={18} color="#4f46e5" />
+        <Text style={styles.subMenuText}>Result</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.subMenuItem}>
+        <Ionicons name="analytics-outline" size={18} color="#4f46e5" />
+        <Text style={styles.subMenuText}>Analytics</Text>
+      </TouchableOpacity>
+    </View>
+  )}
+
+  {/* Study Materials */}
+  <TouchableOpacity style={styles.sidebarItem}>
+    <Ionicons name="library-outline" size={22} color="#6366f1" />
+    <Text style={styles.sidebarText}>Study Materials</Text>
+  </TouchableOpacity>
+
+  {/* Notice */}
+  <TouchableOpacity style={styles.sidebarItem}>
+    <Ionicons name="notifications-outline" size={22} color="#6366f1" />
+    <Text style={styles.sidebarText}>Notice</Text>
+  </TouchableOpacity>
+
+  {/* Message */}
+  <TouchableOpacity style={styles.sidebarItem}>
+    <Ionicons name="chatbubble-ellipses-outline" size={22} color="#6366f1" />
+    <Text style={styles.sidebarText}>Message</Text>
+  </TouchableOpacity>
+
+  {/* Reports */}
+  <TouchableOpacity style={styles.sidebarItem}>
+    <Ionicons name="bar-chart-outline" size={22} color="#6366f1" />
+    <Text style={styles.sidebarText}>Reports</Text>
+  </TouchableOpacity>
+
+  {/* Settings */}
+  <TouchableOpacity style={styles.sidebarItem}>
+    <Ionicons name="settings-outline" size={22} color="#6366f1" />
+    <Text style={styles.sidebarText}>Settings</Text>
+  </TouchableOpacity>
+
+  <TouchableOpacity style={styles.sidebarItem} onPress={onLogout}>
+    <Ionicons name="log-out-outline" size={22} color="#6366f1" />
+    <Text style={styles.sidebarText}>Logout</Text>
+  </TouchableOpacity>
+
+</ScrollView>
+
+
+
+
+    </View>
+
+    {/* Close on background tap */}
+    <TouchableOpacity
+      style={{ flex: 1 }}
+      onPress={() => setSidebarOpen(false)}
+    />
+  </View>
+)}
+
+
 
       {questionMenu && (
   <View style={styles.overlay}>
@@ -302,7 +464,7 @@ const Legend = ({ color, label }) => (
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: "#f4f6ff" },
   header: { padding: 22, borderBottomLeftRadius: 32, borderBottomRightRadius: 32 },
-  headerTop: { flexDirection: "row", alignItems: "center",paddingTop: 10 },
+  headerTop: { flexDirection: "row", alignItems: "center",paddingTop: 20 },
   avatar: { backgroundColor: "#4f46e5", width: 48, height: 48, borderRadius: 24, justifyContent: "center", alignItems: "center" },
   name: { color: "#fff", fontSize: 17, fontWeight: "bold" },
   role: { color: "#c7d2fe", fontSize: 13 },
@@ -418,6 +580,113 @@ menuText: {
   fontSize: 16,
   fontWeight: "600",
   color: "#1e293b",
-}
+},
+
+/* ===== Sidebar ===== */
+sidebarOverlay: {
+  position: "absolute",
+  top: 0,
+  left: 0,
+  right: 0,
+  bottom: 0,
+  backgroundColor: "rgba(0,0,0,0.4)",
+  flexDirection: "row",
+},
+
+sidebar: {
+  width: 260,
+  backgroundColor: "#fff",
+  paddingTop: 50,
+  paddingHorizontal: 20,
+  marginTop: 40,
+},
+
+sidebarHeader: {
+  alignItems: "center",
+  marginBottom: 24,
+},
+
+sidebarClose: {
+  position: "absolute",
+  top: 0,
+  right: 0,
+  padding: 6,
+  borderRadius: 20,
+  backgroundColor: "#f1f5f9",
+},
+
+
+sidebarAvatar: {
+  width: 60,
+  height: 60,
+  borderRadius: 30,
+  backgroundColor: "#6366f1",
+  justifyContent: "center",
+  alignItems: "center",
+  marginBottom: 8,
+},
+
+sidebarName: {
+  fontSize: 16,
+  fontWeight: "700",
+  color: "#0f172a",
+},
+
+sidebarRole: {
+  fontSize: 12,
+  color: "#6b7280",
+  marginBottom: 16,
+},
+
+sidebarItem: {
+  flexDirection: "row",
+  alignItems: "center",
+  gap: 14,
+  paddingVertical: 14,
+},
+
+sidebarText: {
+  fontSize: 15,
+  fontWeight: "600",
+  color: "#1e293b",
+},
+subMenu: {
+  marginLeft: 34,
+  marginTop: 6,
+  marginBottom: 8,
+  borderLeftWidth: 2,
+  borderLeftColor: "#e5e7eb",
+  paddingLeft: 12,
+},
+
+subMenuItem: {
+  flexDirection: "row",
+  alignItems: "center",
+  gap: 10,
+  paddingVertical: 8,
+},
+
+subMenuText: {
+  fontSize: 14,
+  fontWeight: "600",
+  color: "#334155",
+},
+
+fixedLogout: {
+  flexDirection: "row",
+  alignItems: "center",
+  gap: 14,
+  paddingVertical: 16,
+  borderTopWidth: 1,
+  borderTopColor: "#e5e7eb",
+},
+
+fixedLogoutText: {
+  fontSize: 15,
+  fontWeight: "600",
+  color: "#ec1f1f",
+},
+
+
 
 });

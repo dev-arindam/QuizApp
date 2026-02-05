@@ -6,6 +6,7 @@ import {
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
 import { LineChart } from "react-native-chart-kit";
+import StudentFab from "../components/studentFab";
 
 const { width } = Dimensions.get("window");
 import Svg, { Circle, Defs, LinearGradient as SvgLinearGradient, Stop } from "react-native-svg";
@@ -125,82 +126,7 @@ export default function StudentDashboardMerged({ setScreen, user }) {
 
 
   // fab start 
-  const [fabOpen, setFabOpen] = useState(false);
-
-const anim1 = useRef(new Animated.Value(0)).current;
-const anim2 = useRef(new Animated.Value(0)).current;
-const anim3 = useRef(new Animated.Value(0)).current;
-const anim4 = useRef(new Animated.Value(0)).current;
-const anim5 = useRef(new Animated.Value(0)).current;
-const anim6 = useRef(new Animated.Value(0)).current;
-
-
-
-const anims = [anim1, anim2, anim3, anim4, anim5, anim6];
-
-const toggleFab = () => {
-  const toValue = fabOpen ? 0 : 1;
-
-  const animations = anims.map((a, i) =>
-    Animated.timing(a, {
-      toValue,
-      duration: 260 + i * 150,   // ← slower for later FABs
-      delay: i * 40,            // ← small delay each
-      easing: Easing.out(Easing.back(1.3)),
-      useNativeDriver: true,
-    })
-  );
-
-  Animated.parallel(animations).start();
-
-  setFabOpen(!fabOpen);
-};
-
-const FabItem = ({ anim, y, icon, go, toggleFab }) => (
-  <Animated.View
-    style={[
-      styles.fabExtra,
-      {
-transform: [
-  {
-    translateY: anim.interpolate({
-      inputRange: [0, 1],
-      outputRange: [8, y],// start slightly offset
-    }),
-  },
-  {
-    scale: anim.interpolate({
-      inputRange: [0, 0.7, 1],
-      outputRange: [0.5, 1.1, 1], // overshoot pop
-    }),
-  },
-],
-opacity: anim.interpolate({
-  inputRange: [0, 0.3, 1],
-  outputRange: [0, 0.4, 1],
-}),
-
-opacity: anim,
-
-      },
-    ]}
-  >
-    <TouchableOpacity
-      style={styles.fabSmall}
-      onPress={() => {
-        if (typeof go === "function") {
-          go();
-        } else if (go) {
-          setScreen(go);
-        }
-        if (toggleFab) toggleFab();
-      }}
-    >
-      <Ionicons name={icon || "help-outline"} size={20} color="#fff" />
-    </TouchableOpacity>
-  </Animated.View>
-);
-
+    <StudentFab setScreen={setScreen} />
 // end fab 
 
 
@@ -369,34 +295,7 @@ opacity: anim,
       </ScrollView>
 
 {/* ===== FAB MENU BUTTONS ===== */}
-
-{/* // Profile */}
-<FabItem anim={anim1} y={-80} icon="person-outline" go={() => setScreen("profile")} />
-
-{/* // Subjects */}
-<FabItem anim={anim2} y={-140} icon="book-outline" go={() => setScreen("subject")} />
-
-{/* // Attendance */}
-<FabItem anim={anim3} y={-200} icon="calendar-outline" go={() => setScreen("attendance")} />
-
-{/* // Quiz */}
-<FabItem anim={anim4} y={-260} icon="create-outline" go={() => setScreen("quizDashboard")} />
-
-{/* // Messages */}
-<FabItem anim={anim5} y={-320} icon="chatbubble-outline" go={() => setScreen("chat")} />
-
-{/* // Messages */}
-<FabItem anim={anim6} y={-380} icon="home-outline" go={() => setScreen("home")} />
-
-
-
-
-
-{/* Main FAB */}
-<TouchableOpacity style={styles.fab} onPress={toggleFab}>
-  <Ionicons name={fabOpen ? "close" : "menu"} size={26} color="#fff" />
-</TouchableOpacity>
-
+    <StudentFab setScreen={setScreen} />
 
 
     </View>

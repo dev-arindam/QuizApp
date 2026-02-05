@@ -21,9 +21,11 @@ import AdminDepartmentScreen from "./AdminDepartmentScreen";
 import AdminSubjectScreen from "./AdminSubjectScreen";
 import AdminQuizCreationScreen from "./AdminQuizCreationScreen";
 import AdminExpenseScreen from "./AdminExpenseScreen";
+import AdminTaskManagementOverview from "./AdminTaskManagementOverview";
 import AdminStudentUpgrade from "./AdminStudentUpgrade";
+import AdminLeaveApproval from "./AdminLeaveApproval";
+import AdminPerformamceRecord from "./AdminPerformamceRecord";
 import TeacherAssignedSubject from "./TeacherAssignedSubject";
-import LoginScreen from "../login/LoginScreen";
 
 
 /* ============================
@@ -84,9 +86,7 @@ const ActivityRow = ({ text }) => (
 
 /* ---------------- TASK MANAGEMENT SECTIONS ---------------- */
 const TaskOverview = () => (
-  <View style={styles.box}>
-    <Text>Task Management Overview</Text>
-  </View>
+  <AdminTaskManagementOverview />
 );
 
 const AllTasks = () => (
@@ -483,11 +483,27 @@ export default function AdminScreen({ user, scores, onLogout }) {
 
     </>
   );
-/* ---------------- Library SECTION ---------------- */
+  /* ---------------- Library SECTION ---------------- */
   const LibrarySection = () => (
     <>
       <AdminLibrary
       />
+
+    </>
+  );
+  /* ---------------- LEAVE APPROVE SECTION ---------------- */
+  const LeaveApprovalSection = () => (
+    <>
+
+      <AdminLeaveApproval />
+
+    </>
+  );
+  /* ---------------- PERFORMANCE RECORD SECTION ---------------- */
+  const PerformanceRecordSection = () => (
+    <>
+
+      <AdminPerformamceRecord  />
 
     </>
   );
@@ -534,8 +550,12 @@ export default function AdminScreen({ user, scores, onLogout }) {
         return <TaskCalendar />;
       case "Reports":
         return <TaskReports />;
-        case "Library":
+      case "Library":
         return <LibrarySection />;
+      case "Leave Approval":
+        return <LeaveApprovalSection />;
+        case "Performance Record":
+        return <PerformanceRecordSection />;
       default:
         return null;
     }
@@ -567,9 +587,9 @@ export default function AdminScreen({ user, scores, onLogout }) {
               <View style={styles.notificationDot} />
             </TouchableOpacity>
 
-            <View 
+            <View
             >
-              <Image source={{ uri:"https://static.vecteezy.com/system/resources/previews/021/059/827/non_2x/chatgpt-logo-chat-gpt-icon-on-white-background-free-vector.jpg" }} style={styles.profileAvatar} />
+              <Image source={{ uri: "https://static.vecteezy.com/system/resources/previews/021/059/827/non_2x/chatgpt-logo-chat-gpt-icon-on-white-background-free-vector.jpg" }} style={styles.profileAvatar} />
             </View>
           </View>
 
@@ -660,19 +680,26 @@ export default function AdminScreen({ user, scores, onLogout }) {
                       activeMenu === item.label && styles.activeItem,
                     ]}
                     onPress={() => {
-  if (item.label === "Logout") {
-    closeSidebar();
-    onLogout();          // 🔥 THIS LINE LOGS OUT
-    return;
-  }
+                      if (item.label === "Logout") {
+                        closeSidebar();
 
-  if (item.submenu) {
-    setOpenSubmenu(openSubmenu === item.label ? null : item.label);
-  } else {
-    setActiveMenu(item.label);
-    closeSidebar();
-  }
-}}
+                        if (typeof onLogout === "function") {
+                          onLogout();
+                        } else {
+                          console.log("onLogout not provided");
+                        }
+
+                        return;
+                      }
+
+
+                      if (item.submenu) {
+                        setOpenSubmenu(openSubmenu === item.label ? null : item.label);
+                      } else {
+                        setActiveMenu(item.label);
+                        closeSidebar();
+                      }
+                    }}
 
                   >
                     <Ionicons

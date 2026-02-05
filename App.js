@@ -5,6 +5,9 @@ import QuizDashboard from "./student/QuizDashboard";
 import QuizScreen from "./student/QuizScreen";
 import ResultScreen from "./student/ResultScreen";
 import StudentChat from "./student/StudentChat";
+
+import StudentSubjectReview from "./student/StudentSubjectReview";
+
 import AssignmentScreen from "./student/StudentAssignment";
 import StudentProfile from "./student/StudentProfile";
 import StudentAttendance from "./student/StudentAttendance";
@@ -41,11 +44,23 @@ export default function App() {
   }
 
   if (user.role_id === 2) {
-    return <AdminDashboardScreen user={user} scores={scores} />;
+    return (
+    <AdminDashboardScreen
+      user={user}
+      scores={scores}
+      onLogout={() => setUser(null)}
+    />
+  );
   }
 
   if (user.role_id === 1) {
-    return <TeacherDashboard user={user} />;
+    return (
+    <TeacherDashboard
+  user={user}
+  onLogout={() => setUser(null)}
+  setScreen={setScreen}
+/>
+);
   }
 
   /* ===== STUDENT FLOW ===== */
@@ -71,7 +86,7 @@ export default function App() {
           onBack={() => setScreen("home")}
           onLogout={() => {
     setUser(null);      // or clear auth
-    setScreen("login");
+    setScreen("home");
   }}
         />
       )}
@@ -105,6 +120,12 @@ export default function App() {
       {screen === "semesterResult" && (
         <SemesterResult onBack={() => setScreen("home")} />
       )}
+      {/* Student Result */}
+
+      {screen === "review" && (
+        <StudentSubjectReview onBack={() => setScreen("home")} />
+      )}
+
       {/* Subject */}
       {screen === "subject" && (
         <SubjectScreen onBack={() => setScreen("home")} />

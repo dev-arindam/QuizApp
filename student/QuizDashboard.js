@@ -7,7 +7,9 @@ import {
     ScrollView, Animated, Easing
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+
 import StudentFab from "../components/studentFab";
+
 import { Ionicons, FontAwesome5 } from "@expo/vector-icons";
 import React, { useState, useRef } from "react";
 
